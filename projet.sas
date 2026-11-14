@@ -9,4 +9,6 @@ run;
 proc means data=test mean median min max;
     var x;
 run;
-/* test test*/
+
+proc print data=test;run;
+/* test test */
