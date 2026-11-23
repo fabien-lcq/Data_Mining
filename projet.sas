@@ -18,6 +18,59 @@ run;
 
 proc contents data=lasvegas;
 run;
+
+/* Description des variables
+
+User country/User continent ->pays et continent de l'utilisateur
+
+Review month/Review weekday -> Mois et Jour de publication de l'avis
+
+Nr. reviews/Nr. hotel reviews ->Nombre total d'avis et nombre d'avis
+d'hôtels par un utilisateur
+
+Helpful votes -> nombre de vote utiles recu pour l'avis
+
+Score -> note attribuée à l'hôtel
+
+Period of stay -> Periode du séjour de l'utilisateur
+
+Traveler type -> Type de voyageur(Solo,Business...)
+
+Pool/Gym/Tennis court/Spa/Casino/Free internet -> Variables binaires
+concernant la présence ou non des éléments ci-dessus.
+
+Hotel name/Hotel stars/Nr.rooms -> Nom, nombre d'étoiles et nombre de chambre
+de l'hôtel.
+
+Member years -> ancienneté de l'utilisateur sur TripAdvisor.
+*/
+
+/* Etude de la correlation des variables qualitatives */
+proc corresp data=lasvegas  mca;
+tables 
+'User country'n 
+'User continent'n
+'Period of stay'n 
+'Traveler type'n
+'Hotel stars'n
+Score
+Pool Gym 'Tennis court'n Spa Casino 
+'Free internet'n
+'Hotel name'n
+;
+run;
+/* La statistique de test vaut 65 130 et on observe une chi2 à 
+10 404 degrés de liberté.
+Le fractile (seuil de 5%) vaut 10 642.
+Clairement on rejette l'hypothèse H0"les variables sont indépendantes"
+Reste à étudier les correlations de manière plus specifique
+*/
+
+
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Importation du dataset du problème 2 */
 filename wholesal temp;
