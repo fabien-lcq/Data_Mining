@@ -66,6 +66,16 @@ Clairement on rejette l'hypothèse H0"les variables sont indépendantes"
 Reste à étudier les correlations de manière plus specifique
 */
 
+/* Peut on voir une correlation entre les differentes variables binaires
+et le nombre d'étoiles d'un hôtel*/
+
+proc corresp data=lasvegas observed mca;
+tables 'Hotel stars'n
+Pool Gym 'Tennis court'n Spa Casino 
+'Free internet'n;
+run;
+/* On va devoir changer les YES et NO pour mieux lire les resultats*/
+
 
 
 
