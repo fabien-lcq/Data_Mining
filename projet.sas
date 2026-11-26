@@ -328,8 +328,10 @@ donc plus distribués par les commerce, supermarché, epiceries .
 
 
 Pour le deuxième graphique:
+On a plusieurs fournisseurs d'autres régions (3) qui se démarquent
+A DEVELOPPER.
 
-
+*/
 
 
 
