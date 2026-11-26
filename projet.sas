@@ -228,7 +228,7 @@ Clairement, on rejette l'hypothèse H0"les variables sont indépendantes"
 /*INTERPRÉTATION */
 
 /* Rien de bien intéressant à dire pour l'instant
-   A voir si 3 études c'est important ou juste les deux d'avants
+   A voir si 3 études c'est important ou juste les deux d'avant
    c'est okay.*/
 
 
