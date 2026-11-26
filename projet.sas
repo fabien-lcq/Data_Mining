@@ -227,6 +227,11 @@ Clairement, on rejette l'hypothèse H0"les variables sont indépendantes"
 
 /*INTERPRÉTATION */
 
+/* Rien de bien intéressant à dire pour l'instant
+   A voir si 3 études c'est important ou juste les deux d'avants
+   c'est okay.*/
+
+
 
 
 
@@ -255,6 +260,79 @@ run;
 
 proc contents data=wholesale;
 run;
+
+/* Description des variables
+Pour la suite (m.u.) signifie monnaie unitaire.
+Fresh: Dépense annuelle (m.u.) en produits frais 
+Milk: Dépense annuelle (m.u.)  en produits laitiers 
+Grocery: Dépense annuelle (m.u.)en produits alimentaires (secs, emballés) 
+Frozen: Dépense annuelle (m.u.) en produits congelés 
+Detergents_paper: Dépense annuelle (m.u.) en produits d'entretien(ménage, hygiène)
+Delicassen: Dépense annuelle (m.u.) en  produits traiteur/haut de gamme  
+
+CHANNEL: canal de distribution -> 1 pour Hôtel, Restaurent, Café ...
+								  2 pour Commerce, Supermarché, Epiceries ...
+								  
+REGION: Région du client ->1 Lisbonne
+						   2 Oporto (Porto)
+						   3 Autre région
+*/
+
+/*QUESTION 1:Peut on réduire le nombre de variables numériques ? */
+
+proc princomp data=wholesale out=a plots(ncomp=2)=(pattern(circles=1.0) score);
+var Fresh Milk Grocery Frozen Detergents_paper Delicassen;
+title "ACP sur les dépenses annuelles.";
+run;
+
+/* On explique 72% de la variablité totale avec 2 CP
+donc on peut réduire le nombre de variables numériques
+en utilisant ces deux composantes principales. */
+
+/* QUESTION 2: Quelles sont les relations entre les variables numériques ? */
+proc corr data=a;
+var Fresh Milk Grocery Frozen Detergents_paper Delicassen
+prin1 prin2;
+title"Correlation entre var initiales et les 2 premières comp principales";
+run;
+
+
+
+/* Milk, Grocery et Detergents_paper sont  fortement correlés à l'axe 1
+   Fresh et Frozen sont  fortement correlés à l'axe 2
+   Petit précison: Delicassen est modérémment correlé à l'axe 2
+*/
+
+/* On obtient donc deux groupes:
+Le premier comprend les produits laitiers, alimentaires et d'entretien.
+Le second comprend les produits frais, surgelés et traiteur. 
+*/
+
+/* QUESTION 3:Caractérisez les variables Channel, Region . */
+
+proc plot data=a;
+title" ";
+plot prin2*prin1="* " $Channel;
+plot prin2*prin1="*" $Region;
+run;
+
+
+/*INTERPRÉTATION */
+
+/* Pour le premier graphique:
+
+Les produits frais, surgelés et traiteur semblent être principalement
+distribués par les hôtels, Restaurants, Cafés.
+Les autres produits donc laitiers, alimentaires et d'entretien sont
+donc plus distribués par les commerce, supermarché, epiceries .
+
+
+Pour le deuxième graphique:
+
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Importation du dataset du problème 3 */
 filename iono temp;
